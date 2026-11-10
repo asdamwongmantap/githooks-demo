@@ -20,12 +20,19 @@ func main() {
 	switch os.Args[1] {
 	case "install":
 		err = install()
-	//tambahkan code untuk precommit
-
+	// //tambahkan code untuk precommit
+	case "pre-commit":
+		err = preCommit()
 	//tambahkan code untuk commitmsg
-
+	case "commit-msg":
+		if len(os.Args) < 3 {
+			err = fmt.Errorf("commit-msg butuh path file pesan commit")
+		} else {
+			err = commitMsg(os.Args[2])
+		}
 	//tambahkan code untuk prepush
-
+	case "pre-push":
+		err = prePush()
 	default:
 		err = fmt.Errorf("hook tidak dikenal: %q", os.Args[1])
 	}
