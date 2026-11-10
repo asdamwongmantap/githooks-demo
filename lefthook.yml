@@ -1,0 +1,20 @@
+pre-commit:
+  commands:
+    gofmt:
+      glob: "*.go"
+      run: test -z "$(gofmt -l {staged_files})"
+    vet:
+      glob: "*.go"
+      run: go vet ./...
+
+commit-msg:
+  commands:
+    conventional:
+      run: |
+        grep -qE '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^)]+\))?!?: .+' {1} \
+          || { echo "Pesan commit harus format Conventional Commits, mis. feat(auth): tambah login"; exit 1; }
+
+pre-push:
+  commands:
+    test:
+      run: go test ./...
